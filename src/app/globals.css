@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+:root {
+  --poster-primary: #2563eb;
+  --poster-secondary: #7c3aed;
+  --poster-accent: #059669;
+  --poster-background: #fafafa;
+  --poster-card: #ffffff;
+  --poster-text: #1f2937;
+  --poster-text-muted: #6b7280;
+}
+
+@theme inline {
+  --color-background: var(--poster-background);
+  --color-foreground: var(--poster-text);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* Poster container */
+.poster-container {
+  background: var(--poster-background);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Section styling */
+.poster-section {
+  background: var(--poster-card);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.poster-section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+/* Figure cards with zoom interaction */
+.figure-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.figure-card:hover {
+  border-color: var(--poster-primary);
+  transform: scale(1.02);
+}
+
+/* Stats cards */
+.stat-card {
+  background: linear-gradient(135deg, var(--poster-primary) 0%, var(--poster-secondary) 100%);
+  color: white;
+  border-radius: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+}
+
+/* Modal overlay */
+.modal-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  animation: scaleIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Results bar chart styling */
+.result-bar {
+  transition: width 0.8s ease-out;
+}
+
+/* Print styles for physical poster */
+@media print {
+  body {
+    background: white;
+  }
+
+  .poster-container {
+    box-shadow: none;
+  }
+
+  .no-print {
+    display: none;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--poster-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--poster-secondary);
+}
+
+/* Contribution badge styling */
+.contribution-badge {
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+}
+
+/* Pipeline arrow animation */
+.pipeline-arrow {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
