@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --poster-primary: #2563eb;
-  --poster-secondary: #7c3aed;
-  --poster-accent: #059669;
-  --poster-background: #fafafa;
+  /* Professional academic color palette */
+  --poster-primary: #1e3a5f;      /* Dark navy blue */
+  --poster-secondary: #2d5986;    /* Medium blue */
+  --poster-accent: #8b0000;       /* Dark red for emphasis */
+  --poster-background: #ffffff;
   --poster-card: #ffffff;
-  --poster-text: #1f2937;
-  --poster-text-muted: #6b7280;
+  --poster-text: #1a1a1a;
+  --poster-text-muted: #4a4a4a;
+  --poster-border: #d1d5db;
+  --poster-light-bg: #f8f9fa;
 }
 
 @theme inline {
   --color-background: var(--poster-background);
   --color-foreground: var(--poster-text);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 * {
@@ -26,61 +27,113 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #e8e8e8;
   min-height: 100vh;
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  color: var(--poster-text);
+  line-height: 1.5;
 }
 
-/* Poster container */
+/* Poster container - clean white with subtle shadow */
 .poster-container {
   background: var(--poster-background);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Section styling */
+/* Section styling - academic paper style */
 .poster-section {
   background: var(--poster-card);
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid var(--poster-border);
+  border-radius: 0;
 }
 
-.poster-section:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
-}
-
-/* Figure cards with zoom interaction */
-.figure-card {
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.figure-card:hover {
-  border-color: var(--poster-primary);
-  transform: scale(1.02);
-}
-
-/* Stats cards */
-.stat-card {
-  background: linear-gradient(135deg, var(--poster-primary) 0%, var(--poster-secondary) 100%);
+.poster-section-header {
+  background: var(--poster-primary);
   color: white;
-  border-radius: 1rem;
-  transition: transform 0.2s ease;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
 }
 
-.stat-card:hover {
-  transform: scale(1.05);
+/* Figure styling */
+.figure-container {
+  border: 1px solid var(--poster-border);
+  background: white;
 }
 
-/* Modal overlay */
+.figure-caption {
+  font-size: 0.8125rem;
+  color: var(--poster-text-muted);
+  border-top: 1px solid var(--poster-border);
+  padding: 0.75rem;
+  background: var(--poster-light-bg);
+}
+
+.figure-label {
+  font-weight: 700;
+  color: var(--poster-text);
+}
+
+/* Table styling */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table th {
+  background: var(--poster-primary);
+  color: white;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  padding: 0.5rem;
+  text-align: left;
+  font-size: 0.8125rem;
+}
+
+.data-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--poster-border);
+}
+
+.data-table tr:nth-child(even) {
+  background: var(--poster-light-bg);
+}
+
+.data-table .highlight {
+  background: #e8f4e8;
+  font-weight: 600;
+}
+
+/* Results bar chart */
+.result-bar {
+  transition: width 0.6s ease-out;
+  height: 1.25rem;
+}
+
+.bar-trained {
+  background: var(--poster-primary);
+}
+
+.bar-ots-large {
+  background: var(--poster-secondary);
+}
+
+.bar-ots-small {
+  background: #9ca3af;
+}
+
+/* Modal */
 .modal-overlay {
-  animation: fadeIn 0.2s ease;
+  animation: fadeIn 0.15s ease;
 }
 
 .modal-content {
-  animation: scaleIn 0.2s ease;
+  animation: scaleIn 0.15s ease;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 @keyframes fadeIn {
@@ -89,16 +142,24 @@ body {
 }
 
 @keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.9); }
+  from { opacity: 0; transform: scale(0.95); }
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Results bar chart styling */
-.result-bar {
-  transition: width 0.8s ease-out;
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
 }
 
-/* Print styles for physical poster */
+.serif {
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.sans {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Print styles */
 @media print {
   body {
     background: white;
@@ -113,36 +174,71 @@ body {
   }
 }
 
-/* Custom scrollbar */
+/* Scrollbar - minimal */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--poster-primary);
-  border-radius: 4px;
+  background: #999;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--poster-secondary);
+/* Key finding boxes */
+.finding-box {
+  border-left: 3px solid var(--poster-primary);
+  background: var(--poster-light-bg);
+  padding: 0.75rem 1rem;
 }
 
-/* Contribution badge styling */
-.contribution-badge {
-  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+.finding-box-accent {
+  border-left-color: var(--poster-accent);
 }
 
-/* Pipeline arrow animation */
-.pipeline-arrow {
-  animation: pulse 2s infinite;
+/* Clickable figure indicator */
+.figure-clickable {
+  cursor: pointer;
+  transition: box-shadow 0.2s ease;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+.figure-clickable:hover {
+  box-shadow: 0 0 0 2px var(--poster-secondary);
+}
+
+/* QR code and links section */
+.resource-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid var(--poster-border);
+  background: white;
+  text-decoration: none;
+  color: var(--poster-text);
+  transition: background 0.15s;
+}
+
+.resource-link:hover {
+  background: var(--poster-light-bg);
+}
+
+/* Abstract box */
+.abstract-box {
+  background: var(--poster-light-bg);
+  border: 1px solid var(--poster-border);
+  padding: 1rem;
+  font-style: italic;
+}
+
+/* Equation/formula styling */
+.formula {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  background: var(--poster-light-bg);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--poster-border);
+  display: inline-block;
 }
