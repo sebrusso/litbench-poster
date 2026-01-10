@@ -1,6 +1,6 @@
 'use client';
 
-import { FigureCard, StatCard, ResultsChart, DataTable, PipelineFigure, AblationTable } from '@/components';
+import { FigureCard, StatCard, ResultsChart, DataTable, PipelineFigure, AblationTable, QRCode } from '@/components';
 
 export default function Poster() {
   return (
@@ -334,34 +334,53 @@ export default function Poster() {
               {/* Resources */}
               <section className="poster-section">
                 <div className="poster-section-header">Resources</div>
-                <div className="p-4 space-y-2">
-                  <a
-                    href="https://arxiv.org/abs/2507.00769"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resource-link text-sm"
-                  >
-                    <span className="font-semibold font-sans">Paper:</span>
-                    <span className="text-blue-600">arxiv.org/abs/2507.00769</span>
-                  </a>
-                  <a
-                    href="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resource-link text-sm"
-                  >
-                    <span className="font-semibold font-sans">Dataset:</span>
-                    <span className="text-blue-600">HuggingFace/SAA-Lab/litbench</span>
-                  </a>
-                  <a
-                    href="https://litbench.vercel.app/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="resource-link text-sm"
-                  >
-                    <span className="font-semibold font-sans">Demo:</span>
-                    <span className="text-blue-600">litbench.vercel.app</span>
-                  </a>
+                <div className="p-4">
+                  {/* QR Codes */}
+                  <div className="flex justify-center gap-6 mb-4 pb-4 border-b border-gray-200">
+                    <QRCode
+                      url="https://arxiv.org/abs/2507.00769"
+                      label="Paper (arXiv)"
+                    />
+                    <QRCode
+                      url="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461"
+                      label="Dataset (HF)"
+                    />
+                    <QRCode
+                      url="https://litbench.vercel.app/"
+                      label="Demo"
+                    />
+                  </div>
+
+                  {/* Links */}
+                  <div className="space-y-1.5 text-sm">
+                    <a
+                      href="https://arxiv.org/abs/2507.00769"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="resource-link"
+                    >
+                      <span className="font-semibold font-sans">Paper:</span>
+                      <span className="text-blue-600">arxiv.org/abs/2507.00769</span>
+                    </a>
+                    <a
+                      href="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="resource-link"
+                    >
+                      <span className="font-semibold font-sans">Dataset:</span>
+                      <span className="text-blue-600">HuggingFace/SAA-Lab/litbench</span>
+                    </a>
+                    <a
+                      href="https://litbench.vercel.app/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="resource-link"
+                    >
+                      <span className="font-semibold font-sans">Demo:</span>
+                      <span className="text-blue-600">litbench.vercel.app</span>
+                    </a>
+                  </div>
                 </div>
               </section>
             </div>

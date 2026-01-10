@@ -5,3 +5,4 @@ export { default as ResultsChart } from './ResultsChart';
 export { default as DataTable } from './DataTable';
 export { default as PipelineFigure } from './PipelineFigure';
 export { default as AblationTable } from './AblationTable';
+export { default as QRCode } from './QRCode';
