@@ -1,6 +1,7 @@
 'use client';
 
-import { FigureCard, StatCard, ResultsChart, DataTable, PipelineFigure, AblationTable, QRCode } from '@/components';
+import Image from 'next/image';
+import { FigureCard, StatCard, DataTable, AblationTable, QRCode } from '@/components';
 
 export default function Poster() {
   return (
@@ -64,33 +65,34 @@ export default function Poster() {
                 </div>
               </section>
 
-              {/* Motivation */}
-              <section className="poster-section">
-                <div className="poster-section-header">Motivation</div>
-                <div className="p-4 space-y-3">
-                  <div className="finding-box text-sm">
-                    <strong>Problem:</strong> Open-ended creative writing lacks ground truth labels,
-                    making automated evaluation difficult.
-                  </div>
-                  <div className="finding-box text-sm">
-                    <strong>Current Approach:</strong> Off-the-shelf LLMs are used as zero-shot judges,
-                    but their reliability for creative tasks is unclear.
-                  </div>
-                  <div className="finding-box finding-box-accent text-sm">
-                    <strong>Our Goal:</strong> Create a vetted benchmark for reliable, automated
-                    evaluation and optimization of creative writing systems.
-                  </div>
-                </div>
-              </section>
+              {/* Filtering Pipeline Figure */}
+              <FigureCard
+                figureNumber={1}
+                title="Data Filtering Pipeline"
+                caption="Story filtering criteria (left) and story pair debiasing strategies (right) used to construct LitBench."
+                expandedContent={
+                  <Image
+                    src="/figures/filtering-pipeline.png"
+                    alt="Filtering Pipeline"
+                    width={1200}
+                    height={400}
+                    className="w-full h-auto"
+                  />
+                }
+              >
+                <Image
+                  src="/figures/filtering-pipeline.png"
+                  alt="Filtering Pipeline"
+                  width={600}
+                  height={200}
+                  className="w-full h-auto"
+                />
+              </FigureCard>
 
-              {/* Dataset */}
+              {/* Dataset Stats */}
               <section className="poster-section">
-                <div className="poster-section-header">Dataset Construction</div>
+                <div className="poster-section-header">Dataset Statistics</div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm">
-                    <strong>Source:</strong> Reddit r/WritingPrompts (post-2023, ensuring no LLM pretraining overlap)
-                  </p>
-
                   <table className="data-table text-sm">
                     <thead>
                       <tr>
@@ -115,133 +117,137 @@ export default function Poster() {
                         <td>Avg. story length</td>
                         <td className="font-semibold">550 words</td>
                       </tr>
+                      <tr>
+                        <td>Source</td>
+                        <td className="font-semibold">r/WritingPrompts</td>
+                      </tr>
+                      <tr>
+                        <td>Time period</td>
+                        <td className="font-semibold">Post-2023</td>
+                      </tr>
                     </tbody>
                   </table>
-
-                  <div className="text-sm space-y-2 mt-3">
-                    <p className="font-semibold font-sans text-xs uppercase text-gray-500">Debiasing Strategies:</p>
-                    <ul className="space-y-1 text-sm">
-                      <li><strong>Vote margin:</strong> ≥25% upvote difference for preference signal</li>
-                      <li><strong>Temporal:</strong> Preferred story published later (removes exposure bias)</li>
-                      <li><strong>Length:</strong> Pruning pairs with large length differences</li>
-                    </ul>
-                  </div>
                 </div>
               </section>
 
-              {/* Contributions */}
-              <section className="poster-section">
-                <div className="poster-section-header">Contributions</div>
-                <div className="p-4">
-                  <ol className="text-sm space-y-2 list-decimal list-inside">
-                    <li>First standardized benchmark for creative writing verification with debiased human labels</li>
-                    <li>Comprehensive evaluation of off-the-shelf LLM judges as zero-shot evaluators</li>
-                    <li>Trained reward models using Bradley-Terry and generative approaches</li>
-                    <li>Human validation study confirming model alignment with preferences</li>
-                    <li>Public release of LitBench dataset and reward models on HuggingFace</li>
-                  </ol>
-                </div>
-              </section>
+              {/* Length Debiasing Figure */}
+              <FigureCard
+                figureNumber={2}
+                title="Length Debiasing"
+                caption="Distribution of token count differences before (red) and after (purple) frequency-symmetrical debiasing."
+                expandedContent={
+                  <Image
+                    src="/figures/length-debiasing.png"
+                    alt="Length Debiasing Distribution"
+                    width={1200}
+                    height={800}
+                    className="w-full h-auto"
+                  />
+                }
+              >
+                <Image
+                  src="/figures/length-debiasing.png"
+                  alt="Length Debiasing Distribution"
+                  width={600}
+                  height={400}
+                  className="w-full h-auto"
+                />
+              </FigureCard>
             </div>
 
             {/* Column 2 */}
             <div className="space-y-4">
 
-              {/* Pipeline Figure */}
+              {/* Main Results Figure */}
               <FigureCard
-                figureNumber={1}
-                title="LitBench Pipeline"
-                caption="Data collection pipeline from Reddit r/WritingPrompts through debiasing to final evaluation."
+                figureNumber={3}
+                title="Performance Across RM Types"
+                caption="Human agreement (%) for trained reward models (BT, GenRM) and zero-shot judges across model families."
                 expandedContent={
-                  <div className="space-y-6">
-                    <PipelineFigure expanded />
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div className="border border-gray-200 p-3">
-                        <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Collection</p>
-                        <p>Stories paired by writing prompt from r/WritingPrompts</p>
-                      </div>
-                      <div className="border border-gray-200 p-3">
-                        <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Filtering</p>
-                        <p>Post-2023 only to avoid pretraining contamination</p>
-                      </div>
-                      <div className="border border-gray-200 p-3">
-                        <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Debiasing</p>
-                        <p>Vote margin, temporal, and length controls</p>
-                      </div>
-                      <div className="border border-gray-200 p-3">
-                        <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Evaluation</p>
-                        <p>Binary preference prediction task</p>
-                      </div>
-                    </div>
+                  <div className="space-y-4">
+                    <Image
+                      src="/figures/main-results.png"
+                      alt="Main Results"
+                      width={1200}
+                      height={600}
+                      className="w-full h-auto"
+                    />
+                    <DataTable />
                   </div>
                 }
               >
-                <PipelineFigure />
+                <Image
+                  src="/figures/main-results.png"
+                  alt="Main Results"
+                  width={600}
+                  height={300}
+                  className="w-full h-auto"
+                />
               </FigureCard>
 
               {/* Methodology */}
               <section className="poster-section">
                 <div className="poster-section-header">Methodology</div>
-                <div className="p-4 space-y-4">
+                <div className="p-4 space-y-3">
                   <div>
-                    <p className="font-semibold font-sans text-sm mb-2">Off-the-Shelf (OTS) Judges</p>
+                    <p className="font-semibold font-sans text-sm mb-1">Off-the-Shelf (OTS) Judges</p>
                     <p className="text-sm">
                       Zero-shot evaluation using frontier LLMs (GPT-4, Claude, DeepSeek) and
-                      smaller open-source models (Llama, Qwen, Gemma) as pairwise preference judges.
+                      open-source models (Llama, Qwen, Gemma) as pairwise preference judges.
                     </p>
                   </div>
 
                   <div className="border-t pt-3">
-                    <p className="font-semibold font-sans text-sm mb-2">Trained Reward Models</p>
-                    <div className="grid grid-cols-2 gap-3 text-sm">
+                    <p className="font-semibold font-sans text-sm mb-1">Trained Reward Models</p>
+                    <div className="grid grid-cols-2 gap-2 text-sm">
                       <div className="bg-gray-50 border border-gray-200 p-2">
                         <p className="font-semibold">Bradley-Terry (BT)</p>
-                        <p className="text-xs text-gray-600">Pairwise preference learning on Llama-8B</p>
+                        <p className="text-xs text-gray-600">Pairwise preference learning</p>
                       </div>
                       <div className="bg-gray-50 border border-gray-200 p-2">
                         <p className="font-semibold">Generative RM</p>
-                        <p className="text-xs text-gray-600">LM-based scoring on Qwen</p>
+                        <p className="text-xs text-gray-600">LM-based scoring</p>
                       </div>
                     </div>
                   </div>
-
-                  <div className="border-t pt-3">
-                    <p className="font-semibold font-sans text-sm mb-2">Human Validation</p>
-                    <p className="text-sm">
-                      Prospective study with 46 annotators on newly generated LLM stories,
-                      confirming reward model alignment (57% vs 41% preference for best/worst).
-                    </p>
-                  </div>
                 </div>
               </section>
+
+              {/* Scaling Laws Figure */}
+              <FigureCard
+                figureNumber={4}
+                title="Model Scaling Laws"
+                caption="Human agreement vs. model size for BT, GenRM, and zero-shot approaches across Llama, Qwen, and Gemma families."
+                expandedContent={
+                  <Image
+                    src="/figures/scaling-laws.png"
+                    alt="Model Scaling Laws"
+                    width={1200}
+                    height={500}
+                    className="w-full h-auto"
+                  />
+                }
+              >
+                <Image
+                  src="/figures/scaling-laws.png"
+                  alt="Model Scaling Laws"
+                  width={600}
+                  height={250}
+                  className="w-full h-auto"
+                />
+              </FigureCard>
 
               {/* Ablation Study */}
               <section className="poster-section">
                 <div className="poster-section-header">Ablation Study</div>
                 <div className="p-4">
                   <p className="text-sm mb-3">
-                    Impact of debiasing on trained reward model performance:
+                    Impact of debiasing on reward model performance:
                   </p>
                   <AblationTable />
                   <p className="text-xs text-gray-600 mt-3">
-                    Debiasing contributes +13 percentage points to final accuracy.
+                    Debiasing contributes +13pp to final accuracy.
                   </p>
-                </div>
-              </section>
-
-              {/* Scaling */}
-              <section className="poster-section">
-                <div className="poster-section-header">Scaling Observations</div>
-                <div className="p-4 space-y-2 text-sm">
-                  <div className="finding-box">
-                    <strong>BT models:</strong> Notable improvement up to 8B parameters
-                  </div>
-                  <div className="finding-box">
-                    <strong>GenRM:</strong> Performance saturated earlier than BT
-                  </div>
-                  <div className="finding-box">
-                    <strong>Zero-shot judges:</strong> Performance improved with model size
-                  </div>
                 </div>
               </section>
             </div>
@@ -249,21 +255,28 @@ export default function Poster() {
             {/* Column 3 */}
             <div className="space-y-4">
 
-              {/* Results Chart */}
+              {/* Feature Importance Figure */}
               <FigureCard
-                figureNumber={2}
-                title="Model Accuracy Comparison"
-                caption="Preference prediction accuracy on LitBench test set across trained reward models and off-the-shelf judges."
+                figureNumber={5}
+                title="Feature Importance for Verdict Success"
+                caption="Impact of rationale features on model correctness. Plot discussion shows strongest positive effect (+14.8%)."
                 expandedContent={
-                  <div className="space-y-4">
-                    <ResultsChart animated={false} />
-                    <div className="mt-4">
-                      <DataTable />
-                    </div>
-                  </div>
+                  <Image
+                    src="/figures/feature-importance.png"
+                    alt="Feature Importance Heatmap"
+                    width={1200}
+                    height={500}
+                    className="w-full h-auto"
+                  />
                 }
               >
-                <ResultsChart />
+                <Image
+                  src="/figures/feature-importance.png"
+                  alt="Feature Importance Heatmap"
+                  width={600}
+                  height={250}
+                  className="w-full h-auto"
+                />
               </FigureCard>
 
               {/* Key Findings */}
@@ -276,7 +289,7 @@ export default function Poster() {
                   </div>
                   <div className="finding-box text-sm">
                     <p className="font-semibold mb-1">Small models struggle</p>
-                    <p>Models under 10B parameters (Llama-8B, Qwen-7B, Gemma-7B) achieve only 56-60%—barely above random.</p>
+                    <p>Models under 10B parameters achieve only 56-60%—barely above random chance.</p>
                   </div>
                   <div className="finding-box finding-box-accent text-sm">
                     <p className="font-semibold mb-1">Chain-of-thought hurts performance</p>
@@ -285,48 +298,39 @@ export default function Poster() {
                 </div>
               </section>
 
-              {/* Qualitative Analysis */}
-              <section className="poster-section">
-                <div className="poster-section-header">Qualitative Analysis</div>
-                <div className="p-4">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Preferred Stories</p>
-                      <ul className="space-y-1">
-                        <li>• Unexpected plot twists</li>
-                        <li>• Surprising humor</li>
-                        <li>• Clever punchlines</li>
-                        <li>• Creative wordplay</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="font-semibold font-sans text-xs uppercase text-gray-500 mb-2">Rejected Stories</p>
-                      <ul className="space-y-1">
-                        <li>• Dry narratives</li>
-                        <li>• Lack of emotional depth</li>
-                        <li>• Confusing plots</li>
-                        <li>• Strange diction</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <p className="text-xs text-gray-600 mt-3 border-t pt-2">
-                    <strong>Feature analysis:</strong> Plot discussion emerged as strongest predictor (+14.8% correctness).
-                  </p>
-                </div>
-              </section>
+              {/* Ablation Figure */}
+              <FigureCard
+                figureNumber={6}
+                title="Dataset Ablation"
+                caption="Left: Training curves for different pairing strategies. Right: Accuracy by response length difference."
+                expandedContent={
+                  <Image
+                    src="/figures/ablation-study.png"
+                    alt="Ablation Study"
+                    width={1200}
+                    height={400}
+                    className="w-full h-auto"
+                  />
+                }
+              >
+                <Image
+                  src="/figures/ablation-study.png"
+                  alt="Ablation Study"
+                  width={600}
+                  height={200}
+                  className="w-full h-auto"
+                />
+              </FigureCard>
 
               {/* Conclusions */}
               <section className="poster-section">
                 <div className="poster-section-header">Conclusions</div>
                 <div className="p-4 text-sm space-y-2">
-                  <p>
-                    LitBench provides a vetted resource for reliable, automated evaluation of
-                    creative writing systems. Our findings suggest:
-                  </p>
                   <ul className="list-disc list-inside space-y-1">
                     <li>Domain-specific training significantly improves evaluation quality</li>
                     <li>Chain-of-thought reasoning is not universally beneficial</li>
                     <li>Debiased human preferences are essential for training</li>
+                    <li>Plot discussion is the strongest predictor of correct verdicts</li>
                   </ul>
                 </div>
               </section>
@@ -335,50 +339,19 @@ export default function Poster() {
               <section className="poster-section">
                 <div className="poster-section-header">Resources</div>
                 <div className="p-4">
-                  {/* QR Codes */}
                   <div className="flex justify-center gap-6 mb-4 pb-4 border-b border-gray-200">
-                    <QRCode
-                      url="https://arxiv.org/abs/2507.00769"
-                      label="Paper (arXiv)"
-                    />
-                    <QRCode
-                      url="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461"
-                      label="Dataset (HF)"
-                    />
-                    <QRCode
-                      url="https://litbench.vercel.app/"
-                      label="Demo"
-                    />
+                    <QRCode url="https://arxiv.org/abs/2507.00769" label="Paper" />
+                    <QRCode url="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461" label="Dataset" />
+                    <QRCode url="https://litbench.vercel.app/" label="Demo" />
                   </div>
-
-                  {/* Links */}
                   <div className="space-y-1.5 text-sm">
-                    <a
-                      href="https://arxiv.org/abs/2507.00769"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="resource-link"
-                    >
+                    <a href="https://arxiv.org/abs/2507.00769" target="_blank" rel="noopener noreferrer" className="resource-link">
                       <span className="font-semibold font-sans">Paper:</span>
                       <span className="text-blue-600">arxiv.org/abs/2507.00769</span>
                     </a>
-                    <a
-                      href="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="resource-link"
-                    >
+                    <a href="https://huggingface.co/collections/SAA-Lab/litbench-68267b5da3aafe58f9e43461" target="_blank" rel="noopener noreferrer" className="resource-link">
                       <span className="font-semibold font-sans">Dataset:</span>
                       <span className="text-blue-600">HuggingFace/SAA-Lab/litbench</span>
-                    </a>
-                    <a
-                      href="https://litbench.vercel.app/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="resource-link"
-                    >
-                      <span className="font-semibold font-sans">Demo:</span>
-                      <span className="text-blue-600">litbench.vercel.app</span>
                     </a>
                   </div>
                 </div>
@@ -396,7 +369,7 @@ export default function Poster() {
               <span>SAA Lab</span>
             </div>
             <div className="text-xs">
-              Contact: litbench@stanford.edu · Interactive poster: click figures to enlarge
+              Contact: litbench@stanford.edu · Click figures to enlarge
             </div>
           </div>
         </footer>
